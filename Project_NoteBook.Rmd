@@ -39,8 +39,7 @@ mean_datatrain <- sapply(Data_train, mean)
 ```
 **we create data frame with two rows, one for the mean of the test and other with the mean of the train.**
 ```{r}
-df_of_means <- mapply(list, mean_datatest, mean_datatrain, SIMPLIFY = TRUE)
-df_of_means <- data.frame(df_of_means,row.names = c("Mean test", "Mean train")) 
+df_of_means <- mapply(list, mean_datatest, mean_datatrain, SIMPLIFY = TRUE) %>%                      data.frame(row.names = c("Mean test", "Mean train")) 
 df_of_means
 ```
 
