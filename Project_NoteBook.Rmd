@@ -1,0 +1,63 @@
+---
+title: "Script of the project"
+author: "Gregorio Duran"
+output: html_document
+---
+##
+##
+# 1. Merges the training and the test sets to create one data set.
+
+Read the files for load the data with the functions created, for perform this task of form automatic for all the files with the measures of test and train respectively.
+
+The functions, load_test() and load_train, read each, the nine file with the variables of test and train respectively, for each variable create an data frame, having so, an data frame of nine observations each, that is to say, an data frame of nine observation for the test and an data frame of nine observation for the train.
+
+**We load the functions.**
+
+```{r}
+source("load_test.R") 
+source("load_train.R")
+```
+**We execute the functions passing like parameter the route of the folder what contain the files respectively  and save the results in variables with names descriptive.**
+```{r message=FALSE}
+Data_test <- load_test("UCI HAR Dataset/test/Inertial Signals")
+head(Data_test)
+Data_train <- load_train("UCI HAR Dataset/train/Inertial Signals")
+head(Data_train)
+```
+# 2. Extracts only the measurements on the mean and standard deviation for each measurement.
+
+In is section we used functions of the library "dplyr"
+```{r}
+library(dplyr)
+```
+
+**WE compute the mean for each variable in each data set.**
+*Means*
+```{r}
+mean_datatest <- sapply(Data_test, mean)
+mean_datatrain <- sapply(Data_train, mean)
+```
+**we create data frame with two rows, one for the mean of the test and other with the mean of the train.**
+```{r}
+df_of_means <- mapply(list, mean_datatest, mean_datatrain, SIMPLIFY = TRUE)
+df_of_means <- data.frame(df_of_means,row.names = c("Mean test", "Mean train")) 
+df_of_means
+```
+
+**Standard deviation**
+```{r}
+sd_datatest <- sapply(Data_test, sd)
+sd_datatrain <- sapply(Data_train, sd)
+```
+**we create data frame with two rows, one for the standard deviation of the test and other with the standard deviation  the train.**
+```{r}
+df_of_sd <- mapply(list, sd_datatest, sd_datatrain, SIMPLIFY = TRUE) %>% 
+     data.frame(row.names = c("Sd test", "Sd train"))
+df_of_sd
+```
+
+
+
+
+
+
